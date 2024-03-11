@@ -8,8 +8,8 @@
 class AppImages {
   AppImages._();
   
+  static const String chatIcon = 'assets/images/chat_icon.png';  
   static const String homeIcon = 'assets/images/home_icon.png';  
   static const String logo = 'assets/images/logo.png';  
   static const String savedIcon = 'assets/images/saved_icon.png';  
-  static const String user = 'assets/images/user.png';  
 }

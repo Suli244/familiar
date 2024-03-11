@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "671999368523",
+    "project_id": "familiar-e115a",
+    "storage_bucket": "familiar-e115a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671999368523:android:b33f990ac9a98d53dbdcce",
+        "android_client_info": {
+          "package_name": "com.example.familiar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWmiOdiBsBoUkv9s810cKHfrEhik7DQoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

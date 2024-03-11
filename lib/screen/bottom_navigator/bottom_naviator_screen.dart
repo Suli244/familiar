@@ -1,4 +1,5 @@
 import 'package:familiar/core/image/app_images.dart';
+import 'package:familiar/screen/page/chat/chat_screen.dart';
 import 'package:familiar/screen/page/home/home_screen.dart';
 import 'package:familiar/screen/page/saved/saved_screen.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,19 @@ class _BottomNavigatorState extends State<BottomNavigatorScreen> {
               width: 20,
             ),
           ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Image.asset(
+              AppImages.chatIcon,
+              width: 35,
+              color: const Color.fromARGB(255, 105, 106, 110),
+            ),
+            activeIcon: Image.asset(
+              AppImages.chatIcon,
+              color: Colors.white,
+              width: 35,
+            ),
+          ),
         ],
       ),
     );
@@ -65,4 +79,5 @@ class _BottomNavigatorState extends State<BottomNavigatorScreen> {
 List<Widget> pages = [
   const HomeScreen(),
   const SaveScreen(),
+  const ChatScreen(),
 ];

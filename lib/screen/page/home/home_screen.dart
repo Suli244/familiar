@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:familiar/core/image/app_images.dart';
 import 'package:familiar/screen/page/home/hive_saved/boxes.dart';
 import 'package:familiar/screen/page/home/hive_saved/person.dart';
+import 'package:familiar/screen/page/saved/widget/styled_toasts.dart';
+import 'package:familiar/servise/firestore.dart';
 import 'package:familiar/style/app_text_styles.dart';
 import 'package:familiar/widgets/app_unfocuser.dart';
 import 'package:familiar/widgets/button_widget.dart';
@@ -17,11 +20,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> setAdd() async {
+    await Future.delayed(const Duration(milliseconds: 140));
+    showSuccessSnackBar('Успешно cохранено');
+  }
+
   final TextEditingController controllerNameUserName = TextEditingController();
   final TextEditingController controllerAge = TextEditingController();
   final TextEditingController controllerYear = TextEditingController();
   final TextEditingController controllerDesciption = TextEditingController();
-
+  final Firestore firebaseFirestore = Firestore();
   File? selectedImage;
 
   @override
@@ -30,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Home',
+            'Дом',
             style: AppTextStyles.s21W600(color: Colors.white),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 32, 84),
@@ -89,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fit: BoxFit.fill,
                                         )
                                       : const DecorationImage(
-                                          image: AssetImage(
-                                            AppImages.user,
+                                          image: NetworkImage(
+                                            'https://i.ibb.co/LvH8Wgr/user.png',
                                           ),
                                           fit: BoxFit.fill,
                                         ),
@@ -192,17 +200,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                 controllerAge.text.isEmpty &&
                                 controllerYear.text.isEmpty &&
                                 controllerDesciption.text.isEmpty) return;
-                            setState(() {
-                              boxPersons.add(
-                                Person(
-                                  image: selectedImage?.path,
-                                  nameUserName: controllerNameUserName.text,
-                                  age: controllerAge.text,
-                                  year: controllerYear.text,
-                                  desciption: controllerDesciption.text,
-                                ),
-                              );
-                            });
+
+                            firebaseFirestore.addHuman(
+                              controllerNameUserName.text,
+                              controllerAge.text,
+                              controllerYear.text,
+                              controllerDesciption.text,
+                              selectedImage?.path ??
+                                  'https://i.ibb.co/LvH8Wgr/user.png',
+                            );
+                            final currentFocus = FocusScope.of(context);
+                            if (!currentFocus.hasPrimaryFocus &&
+                                currentFocus.focusedChild != null) {
+                              currentFocus.focusedChild!.unfocus();
+                            }
+                            setAdd();
+                            controllerNameUserName.clear();
+                            controllerAge.clear();
+                            controllerYear.clear();
+                            controllerDesciption.clear();
+                            selectedImage = null;
+                            setState(() {});
+                            // Hive
+                            // if (controllerNameUserName.text.isEmpty &&
+                            //     controllerAge.text.isEmpty &&
+                            //     controllerYear.text.isEmpty &&
+                            //     controllerDesciption.text.isEmpty) return;
+                            // setState(() {
+                            //   boxPersons.add(
+                            //     Person(
+                            //       image: selectedImage?.path,
+                            //       nameUserName: controllerNameUserName.text,
+                            //       age: controllerAge.text,
+                            //       year: controllerYear.text,
+                            //       desciption: controllerDesciption.text,
+                            //     ),
+                            //   );
+                            // });
                           },
                           text: 'Сохранить',
                         ),

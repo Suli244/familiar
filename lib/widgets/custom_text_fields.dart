@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.minLength,
     this.minLines,
     this.maxLines,
+    this.initialValue, this.onChanged,
   });
 
   final List<TextInputFormatter>? inputFormatters;
@@ -30,7 +31,8 @@ class CustomTextField extends StatelessWidget {
   final int? minLength;
   final int? minLines;
   final int? maxLines;
-
+  final String? initialValue;
+  final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -43,7 +45,8 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       minLines: minLines,
       maxLines: maxLines ?? 1,
-      
+      initialValue: initialValue,
+      onChanged: onChanged,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         hintText: hintText,
